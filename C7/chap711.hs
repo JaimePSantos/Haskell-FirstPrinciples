@@ -23,3 +23,20 @@ foldBool2 x y z
 
 --3
 g f (a,c) = (f a, c )
+
+
+
+--4 5 6
+
+roundTrip :: (Show a, Read a) => a -> a
+roundTrip a = read (show a)
+
+roundTrip2 :: (Show a, Read a) => a -> a
+roundTrip2 = (read . show) 
+
+roundTrip3 :: (Show a, Read b) => a -> b
+roundTrip3  = read.show
+
+main = do
+    print (roundTrip 4)
+    print (id 4)
