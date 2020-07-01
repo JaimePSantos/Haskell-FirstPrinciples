@@ -25,11 +25,31 @@ dividedBy num denom = go num denom 0
             | n < d = (count, n)
             | otherwise = go (n - d) d (count + 1)
 
-data DividedResult = 
-    Result Integer 
-    | DividedByZero
+data DividedResult =  Result Integer | DividedByZero deriving Show
 
-dividedBy2 num denom = go num denom 0
-    where go n d count 
-            | n<0 && n<d = go (n+d) d (count +1)
-            | (n>=0 || n>=d) = (-count,n)
+dividedBy2 num denom  
+           | denom == 0 = (DividedByZero,DividedByZero)
+           | otherwise = go num denom 0
+                where go n d count 
+                        | n>0 = divPos n d count
+                        | otherwise =  divNeg n d count
+                        where divPos n d count
+                                | n<d && d>0 = (Result (count), Result n)
+                                | n>=d && d>0 = divPos (n-d) d (count+1)
+                                | otherwise = divPosNeg n d count
+                                    where divPosNeg n d count
+                                            | n>=d || d<0 = (Result(-count), Result n)
+                                            |otherwise = divPosNeg (n+d) d (count+1)
+
+
+                              divNeg n d count
+                                | n<0 && n<d = divNeg (n+d) d (count +1)
+                                | otherwise = (Result(-count),Result n)
+
+dividedBy3 _ 0 = DividedByZero
+dividedBy3 num denom = go num denom 0 1 where
+        go n d count sign
+           | n < 0 = go (-n) d count (-sign)
+           | d<0 = go n (-d) count (-sign)
+           | n< d = Result(sign * count)
+           | otherwise = go (n-d) d (count+1) sign
