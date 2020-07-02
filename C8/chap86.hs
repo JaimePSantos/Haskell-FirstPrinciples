@@ -53,3 +53,9 @@ dividedBy3 num denom = go num denom 0 1 where
            | d<0 = go n (-d) count (-sign)
            | n< d = Result(sign * count)
            | otherwise = go (n-d) d (count+1) sign
+
+
+--McCarthy 91 function
+mc91 n
+   | n > 100 = n-10
+   | otherwise = mc91(mc91(n+11))
