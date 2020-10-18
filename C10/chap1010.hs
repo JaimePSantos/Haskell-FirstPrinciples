@@ -74,4 +74,18 @@ squish = foldr(++) []
 
 -- -- 8
 squishMap :: (a->[b]) ->[a]->[b]
-squishMap f = foldr((++).f) []
+-- squishMap f = foldr((++).f) []
+squishMap f = foldr(\x acc-> f x ++ acc) []
+
+-- -- 9
+squishAgain :: [[a]] -> [a]
+squishAgain = squishMap id
+
+-- -- duvidas
+-- -- 10
+myMaximumBy::(a->a-> Ordering)->[a]->a
+myMaximumBy f xs = foldr (\a b -> if f a b == GT then a else b) (last xs) xs
+
+-- -- 11
+myMinimumBy :: (a -> a -> Ordering) -> [a] -> a
+myMinimumBy f xs = foldr (\a b -> if f a b == LT then a else b) (last xs) xs
