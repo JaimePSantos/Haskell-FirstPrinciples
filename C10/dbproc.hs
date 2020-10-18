@@ -26,9 +26,10 @@ mostRecent = maximum.filterDbDate
 
 --4
 sumDb :: [DatabaseItem] -> Integer
-sumDb list = foldr (+) 0 sumList
-      where sumList = filterDbNumber list
+sumDb list = foldr (+) 0((\x-> filterDbNumber x) list)
+-- sumDb list = foldr (+) 0 sumList
+      -- where sumList = filterDbNumber list
 
 --5
 avgDb :: [DatabaseItem] -> Double
-avgDb list = fromIntegral(sumDb list) / fromIntegral(length list) 
+avgDb list = (fromIntegral $ sumDb list) / (fromIntegral $ length $ filterDbNumber list)
